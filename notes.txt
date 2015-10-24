@@ -1,0 +1,11 @@
+mvn archetype:generate -Dappengine-version=1.9.27 -Dapplication-id=mysmartlinewebdebug -Dfilter=com.google.appengine.archetypes:
+
+mvn appengine:devserver
+
+http://localhost:8080/
+http://localhost:8080/_ah/admin
+
+git add -A
+git commit -m "the commit message"
+git pull origin master
+git push origin master

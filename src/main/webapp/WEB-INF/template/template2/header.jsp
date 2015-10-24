@@ -1,0 +1,1 @@
+<div class="header">template2 header</div>
