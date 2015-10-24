@@ -5,7 +5,7 @@ package eu.mysmartline.models;
  * that will be presented to the next potential client.
  */
 public class ClientDetailsModel {
-	private Long lineId;
+	private String lineId;
 	private String lineName;
 	private String currentNumber;
 	private String nextProbableNumber;
@@ -13,19 +13,12 @@ public class ClientDetailsModel {
 	private int probableWaitTime;
 	private String notifType;
 	private String email;
+	//start of gennerated content
 	
-	
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
-	public Long getLineId() {
+	public String getLineId() {
 		return lineId;
 	}
-	public void setLineId(Long lineId) {
+	public void setLineId(String lineId) {
 		this.lineId = lineId;
 	}
 	public String getLineName() {
@@ -64,6 +57,10 @@ public class ClientDetailsModel {
 	public void setNotifType(String notifType) {
 		this.notifType = notifType;
 	}
-	
-	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 }

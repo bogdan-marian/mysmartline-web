@@ -24,16 +24,15 @@ import eu.mysmartline.services.MyHttpService;
 public class LineRegistrationController {
 
 	@RequestMapping(value = "LineRegistration/readClientDetails/{lineId}", method = RequestMethod.GET)
-	public String readClientDetails(@PathVariable Long lineId, ModelMap model) {
+	public String readClientDetails(@PathVariable String lineId, ModelMap model) {
 
 		// notify all devices about resource accessed
-		MyHttpService.notifyDevicesResourceAccessed(lineId);
+		//MyHttpService.notifyDevicesResourceAccessed(lineId);
 
-		/*ClientDetailsModel clientDetailsModel = ClientDetailsService
+		ClientDetailsModel clientDetailsModel = ClientDetailsService
 				.getForNewClientByLineId(lineId);
 		model.addAttribute(clientDetailsModel);
-		return "LineRegistration/readClientDetails";*/
-		throw new IllegalStateException("Please finish this");
+		return "LineRegistration/readClientDetails";
 	}
 
 	@RequestMapping(value = "LineRegistration/readClientDetailsPost", method = RequestMethod.POST)

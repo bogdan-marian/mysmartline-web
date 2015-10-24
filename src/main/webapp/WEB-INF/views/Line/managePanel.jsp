@@ -32,23 +32,23 @@
 						<h2><spring:message code="linie.manage.Line-manage" /></h2>
 						<p>
 							<a class="btn-u rounded"
-								href="/LineRegistration/readClientDetails/${line.longPartId }"><i
+								href="/LineRegistration/readClientDetails/${line.id }"><i
 								class="fa fa-mobile"></i> <spring:message code="linie.manage.Simulate-clients" /></a>
 								<a
 								class="btn-u btn-u-blue rounded"
-								href="../resetNumbers/${line.longPartId }"><i
+								href="../resetNumbers/${line.id }"><i
 								class="fa fa-refresh"></i> <spring:message code="linie.manage.Reset" /></a>
 								<a
 								class="btn-u rounded"
-								href="../edit/${line.longPartId }"><i
+								href="../edit/${line.id }"><i
 								class="fa fa-wrench"></i> <spring:message code="linie.manage.Edit-line" /></a>
 								<a
 								class="btn-u rounded"
-								href="../extendLine/${line.longPartId }"><i
+								href="../extendLine/${line.id }"><i
 								class="fa fa-calendar"></i> <spring:message code="linie.manage.exendValidationDate" /></a>
 								 <a
 								class="btn-u btn-u-red rounded"
-								href="../archive/${line.longPartId }"><i
+								href="../archive/${line.id }"><i
 								class="fa fa-exclamation-triangle"></i> <spring:message code="linie.manage.Archive" /></a>
 						</p>
 					</div>

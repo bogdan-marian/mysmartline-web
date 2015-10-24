@@ -1,8 +1,11 @@
 mvn archetype:generate -Dappengine-version=1.9.27 -Dapplication-id=mysmartlinewebdebug -Dfilter=com.google.appengine.archetypes:
 
 mvn appengine:devserver
+mvn appengine:update
 
 http://localhost:8080/
+https://mysmartlinewebdebug.appspot.com/
+
 http://localhost:8080/_ah/admin
 
 git add -A
