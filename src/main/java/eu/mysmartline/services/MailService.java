@@ -3,7 +3,7 @@ package eu.mysmartline.services;
 import eu.mysmartline.models.MyKeys;
 
 public class MailService {
-	public static void sendConfirmRegistration(Long notificationId) {
+	public static void sendConfirmRegistration(String notificationId) {
 		String emailValue = NotificationItemService
 				.getNotificationValue(notificationId);
 		// count the message
@@ -100,7 +100,7 @@ public class MailService {
 
 	}
 
-	public static void sendUpdateMessage(Long notificationId) {
+	public static void sendUpdateMessage(String notificationId) {
 
 		Integer ahead = NotificationItemService.getClientsAhead(notificationId);
 

@@ -20,27 +20,28 @@ public class NotificationItemService {
 		em.getTransaction().begin();
 		notificationItem = em.find(NotificationItem.class,
 				notificationItem.getId());
-		notificationItem.setLongPartId(notificationItem.getId().getId());
 		em.getTransaction().commit();
 		return notificationItem;
 	}
 
-	public static Key getKey(Long notificationId) {
-		return KeyFactory.createKey(NotificationItem.class.getSimpleName(),
-				notificationId);
+	public static Key getKey(String notificationId) {
+		/*return KeyFactory.createKey(NotificationItem.class.getSimpleName(),
+				notificationId);*/
+		return KeyFactory.stringToKey(notificationId);
 	}
 
-	public static LineNumber getLineNumber(Long notificationId) {
+	public static LineNumber getLineNumber(String notificationId) {
 		Key notifKey = getKey(notificationId);
 		EntityManager em = EmfService.getEntityManager();
 		em.getTransaction().begin();
 		NotificationItem notificationItem = em.find(NotificationItem.class,
 				notifKey);
 		em.getTransaction().rollback();
-		return notificationItem.getLineNumber();
+		LineNumber lineNumber = LineNumberService.getById(notificationItem.getLineNumberId());
+		return lineNumber;
 	}
 
-	public static String getNotificationValue(Long notificationId) {
+	public static String getNotificationValue(String notificationId) {
 		Key notifKey = getKey(notificationId);
 		EntityManager em = EmfService.getEntityManager();
 		em.getTransaction().begin();
@@ -49,36 +50,35 @@ public class NotificationItemService {
 		em.getTransaction().rollback();
 		return notificationItem.getNotificationValue();
 	}
-	public static String getLineName(Long notificationId){
+	public static String getLineName(String notificationId){
 		LineNumber lineNumber = getLineNumber(notificationId);
-		Line line = lineNumber.getLine();
 		
-		//return LineService.getName(line.getLongPartId());
-		throw new IllegalStateException("Please finish this");
+		return LineService.getName(lineNumber.getLineId());
 	}
-	public static String getLineUserId(Long notificationId){
+	public static String getLineUserId(String notificationId){
 		LineNumber lineNumber = getLineNumber(notificationId);
-		Line line = lineNumber.getLine();
+		Line line = LineService.getLine(lineNumber.getLineId());
 		
 		return line.getUserId();
 	}
 	
-	public static String getClientUrl(Long notificationId){
+	public static String getClientUrl(String notificationId){
 		return MyKeys.PROPERTY_HOME +"ClientPanel/viewStatus/"+notificationId;
 	}
-	public static int getClientsAhead(Long notificationId){
+	public static int getClientsAhead(String notificationId){
 		Key notifKey = getKey(notificationId);
 		EntityManager em = EmfService.getEntityManager();
 		em.getTransaction().begin();
 		NotificationItem notificationItem = em.find(NotificationItem.class,
 				notifKey);
-		LineNumber lineNumber= notificationItem.getLineNumber();
 		em.getTransaction().rollback();
-		
+		String lineNumberId = notificationItem.getLineNumberId();
+		LineNumber lineNumber= LineNumberService.getById(lineNumberId);
 		return LineNumberService.getClientsAhead(lineNumber.getId());
 	}
-	public static NotificationItem getByLongId(Long longId){
-		Key key = getKey(longId);
+	
+	public static NotificationItem getById(String notificationItemId){
+		Key key = getKey(notificationItemId);
 		EntityManager em = EmfService.getEntityManager();
 		em.getTransaction().begin();
 		NotificationItem notificationItem = em.find(NotificationItem.class, key);

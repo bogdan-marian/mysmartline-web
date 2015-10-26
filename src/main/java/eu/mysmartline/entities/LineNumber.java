@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.datanucleus.api.jpa.annotations.Extension;
+
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.datanucleus.annotations.Unowned;
 
@@ -16,18 +18,12 @@ import com.google.appengine.datanucleus.annotations.Unowned;
 public class LineNumber {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Key id;
-	private Long longPartId;
+	@Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")
+	private String id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Line line;
-	
-	
-	@Unowned
-	private NotificationItem notificationItem;
-	
-	@Unowned
-	private ServicePoint servicePoint;
+	private String lineId;
+	private String notificationItemId;
+	private String servicePointId;
 	
 	private int number;
 	private boolean isCurrent = false;
@@ -37,43 +33,36 @@ public class LineNumber {
 	private Date dateArchived;
 	private boolean sameDay;
 	private Long durationInMiliseconds;
-	
-	
-	public Key getId() {
+	//start of generated content
+	public String getId() {
 		return id;
 	}
-	public void setId(Key id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-	public Long getLongPartId() {
-		return longPartId;
+	public String getLineId() {
+		return lineId;
 	}
-	public void setLongPartId(Long longPartId) {
-		this.longPartId = longPartId;
+	public void setLineId(String lineId) {
+		this.lineId = lineId;
 	}
-	public Line getLine() {
-		return line;
+	public String getNotificationItemId() {
+		return notificationItemId;
 	}
-	public void setLine(Line line) {
-		this.line = line;
+	public void setNotificationItemId(String notificationItemId) {
+		this.notificationItemId = notificationItemId;
+	}
+	public String getServicePointId() {
+		return servicePointId;
+	}
+	public void setServicePointId(String servicePointId) {
+		this.servicePointId = servicePointId;
 	}
 	public int getNumber() {
 		return number;
 	}
 	public void setNumber(int number) {
 		this.number = number;
-	}
-	public NotificationItem getNotificationItem() {
-		return notificationItem;
-	}
-	public void setNotificationItem(NotificationItem notificationItem) {
-		this.notificationItem = notificationItem;
-	}
-	public Date getDateAsigned() {
-		return dateAsigned;
-	}
-	public void setDateAsigned(Date dateAsigned) {
-		this.dateAsigned = dateAsigned;
 	}
 	public boolean isCurrent() {
 		return isCurrent;
@@ -87,23 +76,23 @@ public class LineNumber {
 	public void setArchived(boolean isArchived) {
 		this.isArchived = isArchived;
 	}
-	public Date getDateArchived() {
-		return dateArchived;
+	public Date getDateAsigned() {
+		return dateAsigned;
 	}
-	public void setDateArchived(Date dateArchived) {
-		this.dateArchived = dateArchived;
-	}
-	public ServicePoint getServicePoint() {
-		return servicePoint;
-	}
-	public void setServicePoint(ServicePoint servicePoint) {
-		this.servicePoint = servicePoint;
+	public void setDateAsigned(Date dateAsigned) {
+		this.dateAsigned = dateAsigned;
 	}
 	public Date getDateActivated() {
 		return dateActivated;
 	}
 	public void setDateActivated(Date dateActivated) {
 		this.dateActivated = dateActivated;
+	}
+	public Date getDateArchived() {
+		return dateArchived;
+	}
+	public void setDateArchived(Date dateArchived) {
+		this.dateArchived = dateArchived;
 	}
 	public boolean isSameDay() {
 		return sameDay;

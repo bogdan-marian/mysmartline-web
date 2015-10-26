@@ -45,7 +45,7 @@ public class LineRegistrationController {
 		}
 		// for the moment the form is only for email's
 		clientDetailsModel.setNotifType("email");
-/*
+
 		RegistrationResultModel resultModel = LineService.registerNewClient(
 				clientDetailsModel.getLineId(),
 				clientDetailsModel.getNotifType(),
@@ -59,8 +59,7 @@ public class LineRegistrationController {
 			}
 		}
 		model.addAttribute(resultModel);
-		return "LineRegistration/readClientDetailsPost";*/
-		throw new IllegalStateException("Please finish implementing this");
+		return "LineRegistration/readClientDetailsPost";
 	}
 
 	@RequestMapping(value = "LineRegistration/generatePrintNumber/{jsonPrintRequest}")

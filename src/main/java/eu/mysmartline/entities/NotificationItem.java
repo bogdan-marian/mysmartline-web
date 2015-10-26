@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.datanucleus.api.jpa.annotations.Extension;
+
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.datanucleus.annotations.Unowned;
 
@@ -14,32 +16,26 @@ public class NotificationItem {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Key id;
-	private Long longPartId;
+	@Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")
+	private String id;
 	
-	@Unowned
-	@Persistent(mappedBy="notificationItem")
-	LineNumber lineNumber;
-	
-	
+	private String lineNumberId;
 	
 	private String notificationType;
 	private String notificationValue;
 	private Integer notifyBefore;
-	
-	
 	//---- start getters and setters\
-	public Key getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Key id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-	public Long getLongPartId() {
-		return longPartId;
+	public String getLineNumberId() {
+		return lineNumberId;
 	}
-	public void setLongPartId(Long longPartId) {
-		this.longPartId = longPartId;
+	public void setLineNumberId(String lineNumberId) {
+		this.lineNumberId = lineNumberId;
 	}
 	public String getNotificationType() {
 		return notificationType;
@@ -53,17 +49,12 @@ public class NotificationItem {
 	public void setNotificationValue(String notificationValue) {
 		this.notificationValue = notificationValue;
 	}
-	public LineNumber getLineNumber() {
-		return lineNumber;
-	}
-	public void setLineNumber(LineNumber lineNumber) {
-		this.lineNumber = lineNumber;
-	}
 	public Integer getNotifyBefore() {
 		return notifyBefore;
 	}
 	public void setNotifyBefore(Integer notifyBefore) {
 		this.notifyBefore = notifyBefore;
 	}
+	
 	
 }

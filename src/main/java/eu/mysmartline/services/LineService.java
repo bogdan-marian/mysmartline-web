@@ -38,10 +38,10 @@ public class LineService {
 			clientStatusModel.setActive(false);
 		} else {
 
-			NotificationItem notificationItem = currentNumber
-					.getNotificationItem();
+			NotificationItem notificationItem = NotificationItemService.getById( currentNumber
+					.getNotificationItemId());
 			clientStatusModel.setNotificationId(notificationItem
-					.getLongPartId());
+					.getId());
 			clientStatusModel.setActive(true);
 			clientStatusModel.setLineName(LineService.getName(lineId));
 			clientStatusModel.setClientNumber(LineService.getLabel(lineId)
@@ -71,15 +71,16 @@ public class LineService {
 
 	public static LineNumber getCurrentLineNumber(String lineId) {
 		// get current
+		
 		Key lineKey = getKey(lineId);
 		EntityManager em = EmfService.getEntityManager();
 		em.getTransaction().begin();
 		Line line = em.find(Line.class, lineKey);
 		TypedQuery<LineNumber> query = em
 				.createQuery(
-						"select n from LineNumber n where line=:theLine and isCurrent=:vIsCurrent",
+						"select n from LineNumber n where lineId=:theLineId and isCurrent=:vIsCurrent",
 						LineNumber.class);
-		query.setParameter("theLine", line);
+		query.setParameter("theLineId", lineId);
 		query.setParameter("vIsCurrent", true);
 		List<LineNumber> lineNumbers = query.getResultList();
 		em.getTransaction().rollback();
@@ -92,12 +93,13 @@ public class LineService {
 		em.getTransaction().begin();
 		query = em
 				.createQuery(
-						"select n from LineNumber n where n.line=:theLine and n.dateArchived is not null order by n.dateArchived desc",
+						"select n from LineNumber n where n.lineId=:theLineId and n.dateArchived is not null order by n.dateArchived desc",
 						LineNumber.class);
-		query.setParameter("theLine", line);
+		query.setParameter("theLineId", lineId);
 		query.setMaxResults(1);
 		lineNumbers = query.getResultList();
 		em.getTransaction().rollback();
+		System.out.println("Debug item:-------------------------- getCurrentLineNumber");
 		if (lineNumbers.size() > 0) {
 			LineNumber lineNumber = lineNumbers.get(0);
 			return lineNumber;
@@ -123,9 +125,9 @@ public class LineService {
 		}
 		TypedQuery<LineNumber> query = em
 				.createQuery(
-						"select n from LineNumber n where n.line=:theLine order by n.dateAsigned desc",
+						"select n from LineNumber n where n.lineId=:theLineId order by n.dateAsigned desc",
 						LineNumber.class);
-		query.setParameter("theLine", line);
+		query.setParameter("theLineId", lineId);
 		query.setMaxResults(1);
 		List<LineNumber> lineNumbers = query.getResultList();
 		em.getTransaction().rollback();
@@ -177,9 +179,9 @@ public class LineService {
 		Line line = em.find(Line.class, lineKey);
 		TypedQuery<LineNumber> query = em
 				.createQuery(
-						"select n from LineNumber n where n.line=:pLine and isArchived=:pIsArchived and isCurrent=:pIsCurrent",
+						"select n from LineNumber n where n.lineId=:pLine and isArchived=:pIsArchived and isCurrent=:pIsCurrent",
 						LineNumber.class);
-		query.setParameter("pLine", line);
+		query.setParameter("pLine", id);
 		query.setParameter("pIsArchived", false);
 		query.setParameter("pIsCurrent", false);
 		List<LineNumber> lineNumbers = query.getResultList();
@@ -210,9 +212,9 @@ public class LineService {
 		em.getTransaction().begin();
 		TypedQuery<LineNumber> query1 = em
 				.createQuery(
-						"select n from LineNumber n where line = :theLine and isArchived = :vIsArchived",
+						"select n from LineNumber n where lineId = :theLineId and isArchived = :vIsArchived",
 						LineNumber.class);
-		query1.setParameter("theLine", line);
+		query1.setParameter("theLineId", lineId);
 		query1.setParameter("vIsArchived", false);
 		List<LineNumber> lineNumbers = query1.getResultList();
 		em.getTransaction().rollback();
@@ -222,7 +224,10 @@ public class LineService {
 		if (!notifType.equals("print")) {
 			for (LineNumber lineNumber2 : lineNumbers) {
 				em.getTransaction().begin();
-				if (lineNumber2.getNotificationItem().getNotificationValue()
+				
+				String notificationItemId = lineNumber2.getNotificationItemId();
+				NotificationItem notificationItem = NotificationItemService.getById(notificationItemId);
+				if (notificationItem.getNotificationValue()
 						.equals(notifValue)) {
 					emailInLine = true;
 					break;
@@ -246,11 +251,10 @@ public class LineService {
 
 		em.getTransaction().begin();
 		//line.getLineNumbers().add(lineNumber);
-		lineNumber.setLine(line);
+		lineNumber.setLineId(lineId);
 		em.getTransaction().commit();
 
 		em.getTransaction().begin();
-		lineNumber.setLongPartId(lineNumber.getId().getId());
 		em.getTransaction().commit();
 
 		// ---end create a number ---
@@ -268,8 +272,8 @@ public class LineService {
 		notificationItem.setNotificationValue(notifValue);
 		notificationItem.setNotifyBefore(line.getNotifyBefore());
 		// @Unowned relations
-		lineNumber.setNotificationItem(notificationItem);
-		notificationItem.setLineNumber(lineNumber);
+		lineNumber.setNotificationItemId(notificationItem.getId());
+		notificationItem.setLineNumberId(lineNumber.getId());
 		em.getTransaction().commit();
 		// -----------end create a notification -----
 		// if line was reset disable reset
@@ -278,12 +282,12 @@ public class LineService {
 		// notify the clinet if hotification value = email;
 		if (notificationItem.getNotificationType().equals("email")) {
 			MailService.sendConfirmRegistration(notificationItem
-					.getLongPartId());
+					.getId());
 		}
-		return new RegistrationResultModel(notificationItem.getLongPartId());
+		return new RegistrationResultModel(notificationItem.getId());
 	}
 
-	public static boolean convertNumber(Long notificationId, String notifType,
+	public static boolean convertNumber(String notificationId, String notifType,
 			String notifValue) {
 
 		// find the notification item and set the email
@@ -300,7 +304,7 @@ public class LineService {
 		}
 		// notify the clinet if hotification value = email;
 		if (item.getNotificationType().equals("email")) {
-			MailService.sendConfirmRegistration(item.getLongPartId());
+			MailService.sendConfirmRegistration(item.getId());
 		}
 		return true;
 	}
@@ -360,8 +364,9 @@ public class LineService {
 		em.getTransaction().rollback();
 
 		for (LineNumber number : lineNumbers) {
+			NotificationItem notificationItem = NotificationItemService.getById(number.getNotificationItemId());
 			em.getTransaction().begin();
-			map.put(number, number.getNotificationItem());
+			map.put(number, notificationItem);
 			em.getTransaction().rollback();
 		}
 		return map;
@@ -487,9 +492,12 @@ public class LineService {
 
 		ActivationItemService.proces(item, line);
 	}
-	public static Line getLineByNotifId(Long notifId){
-		NotificationItem notificationItem = NotificationItemService.getByLongId(notifId);
-		LineNumber lineNumber = notificationItem.getLineNumber();
-		return lineNumber.getLine();
+	public static Line getLineByNotifId(String notifId){
+		NotificationItem notificationItem = NotificationItemService.getById(notifId);
+		LineNumber lineNumber = LineNumberService.getById( notificationItem.getLineNumberId());
+		
+		String lineId = lineNumber.getLineId();
+		Line line = LineService.getLine(lineId);
+		return line;
 	}
 }

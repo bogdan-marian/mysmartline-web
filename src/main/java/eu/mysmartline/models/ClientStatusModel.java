@@ -5,7 +5,7 @@ package eu.mysmartline.models;
  * that will be presented to an active client.
  */
 public class ClientStatusModel {
-	private Long notificationId;
+	private String notificationId;
 	private boolean isActive;
 	private String lineName;
 	private String clientNumber;
@@ -14,12 +14,11 @@ public class ClientStatusModel {
 	private int probableWaitMinutes;
 	private String notificationValue;
 	private String notificationType = "email";
-	
 	//getters and setters
-	public Long getNotificationId() {
+	public String getNotificationId() {
 		return notificationId;
 	}
-	public void setNotificationId(Long notificationId) {
+	public void setNotificationId(String notificationId) {
 		this.notificationId = notificationId;
 	}
 	public boolean isActive() {

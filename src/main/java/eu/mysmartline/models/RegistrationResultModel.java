@@ -9,7 +9,7 @@ public class RegistrationResultModel {
 	
 	private boolean succesfullRegistration;
 	private ReasonNotSuccesfull reasonNotSuccesfull;
-	private Long longNotificationItemId;
+	private String notificationItemId;
 	
 	public RegistrationResultModel() {
 	}
@@ -31,29 +31,35 @@ public class RegistrationResultModel {
 			break;
 		}
 	}
-	public RegistrationResultModel(Long longNotificationItemId){
-		this.longNotificationItemId = longNotificationItemId;
+	public RegistrationResultModel(String notificationItemIdVal){
+		this.notificationItemId = notificationItemIdVal;
 		succesfullRegistration = true;
 	}
-	
 	//start getters and setters
+
 	public boolean isSuccesfullRegistration() {
 		return succesfullRegistration;
 	}
+
 	public void setSuccesfullRegistration(boolean succesfullRegistration) {
 		this.succesfullRegistration = succesfullRegistration;
 	}
-	public Long getLongNotificationItemId() {
-		return longNotificationItemId;
-	}
-	public void setLongNotificationItemId(Long longNotificationItemId) {
-		this.longNotificationItemId = longNotificationItemId;
-	}
+
 	public ReasonNotSuccesfull getReasonNotSuccesfull() {
 		return reasonNotSuccesfull;
 	}
+
 	public void setReasonNotSuccesfull(ReasonNotSuccesfull reasonNotSuccesfull) {
 		this.reasonNotSuccesfull = reasonNotSuccesfull;
 	}
+
+	public String getNotificationItemId() {
+		return notificationItemId;
+	}
+
+	public void setNotificationItemId(String notificationItemId) {
+		this.notificationItemId = notificationItemId;
+	}
+	
 	
 }

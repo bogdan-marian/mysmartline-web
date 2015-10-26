@@ -15,13 +15,13 @@ public class ClientStatusService {
 	 */
 
 	public static ClientStatusModel getStatusByNotificationId(
-			Long notificationId) {
+			String notificationId) {
 		ClientStatusModel clientStatusModel = new ClientStatusModel();
 		clientStatusModel.setNotificationId(notificationId);
 
 		LineNumber lineNumber = NotificationItemService
 				.getLineNumber(notificationId);
-		/*Long lineId = lineNumber.getLine().getLongPartId();
+		String lineId = lineNumber.getLineId();
 
 		clientStatusModel.setActive(lineNumber.isArchived());
 		clientStatusModel.setLineName(LineService.getName(lineId));
@@ -33,10 +33,10 @@ public class ClientStatusService {
 		int clientsAhead = LineNumberService
 				.getClientsAhead(lineNumber.getId());
 		clientStatusModel.setClientsAhead(clientsAhead);
-		*//**
+		/**
 		 * TODO implement this for the moment just multiply clients ahead with
 		 * 15
-		 *//*
+		 */
 		int averageWaitMinutes = (int) LineNumberService
 				.getAverageDuration(lineNumber.getId());
 
@@ -45,8 +45,7 @@ public class ClientStatusService {
 		clientStatusModel.setNotificationValue(NotificationItemService
 				.getNotificationValue(notificationId));
 
-		return clientStatusModel;*/
-		throw new IllegalStateException("Please finish this");
+		return clientStatusModel;
 	}
 
 }
