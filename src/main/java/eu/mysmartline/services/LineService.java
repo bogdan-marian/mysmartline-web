@@ -208,7 +208,9 @@ public class LineService {
 		em.getTransaction().begin();
 		Line line = em.find(Line.class, lineKey);
 		em.getTransaction().rollback();
-
+		
+		
+		
 		em.getTransaction().begin();
 		TypedQuery<LineNumber> query1 = em
 				.createQuery(
@@ -218,7 +220,7 @@ public class LineService {
 		query1.setParameter("vIsArchived", false);
 		List<LineNumber> lineNumbers = query1.getResultList();
 		em.getTransaction().rollback();
-
+				
 		boolean emailInLine = false;
 		// detect if user already in line if it is not a print ticket
 		if (!notifType.equals("print")) {
@@ -242,19 +244,18 @@ public class LineService {
 		} else {
 
 		}
+		
 		// user is not in line so you have to add him
 		// ------- create a number---
 		int number = getNextProbableNumber(lineId);
+		System.out.println("Next probable number = " + number);
 
 		LineNumber lineNumber = new LineNumber();
 		lineNumber.setNumber(number);
-
+		lineNumber.setLineId(lineId);
 		em.getTransaction().begin();
 		//line.getLineNumbers().add(lineNumber);
-		lineNumber.setLineId(lineId);
-		em.getTransaction().commit();
-
-		em.getTransaction().begin();
+		em.persist(lineNumber);
 		em.getTransaction().commit();
 
 		// ---end create a number ---
@@ -278,11 +279,13 @@ public class LineService {
 		// -----------end create a notification -----
 		// if line was reset disable reset
 		disableReset(lineId);
-
+		
 		// notify the clinet if hotification value = email;
 		if (notificationItem.getNotificationType().equals("email")) {
+			System.out.println("MailService.sendConfirmRegistration =============================");
 			MailService.sendConfirmRegistration(notificationItem
 					.getId());
+			System.out.println("Mail OK============================ =============================");
 		}
 		return new RegistrationResultModel(notificationItem.getId());
 	}

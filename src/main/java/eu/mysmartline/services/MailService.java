@@ -4,17 +4,23 @@ import eu.mysmartline.models.MyKeys;
 
 public class MailService {
 	public static void sendConfirmRegistration(String notificationId) {
+		
 		String emailValue = NotificationItemService
 				.getNotificationValue(notificationId);
 		// count the message
 		String userId = NotificationItemService.getLineUserId(notificationId);
+		
 		CounterService.addEmail(emailValue, MyKeys.MESSAGE_TYPE_EMAIL, userId);
-
 		// if it is a test then do not send the email;
+		System.out.println("==============================Prepare for test_domain = ");
+		
 		if (emailValue.contains(MyKeys.TEST_DOMAIN)) {
 			// test mail do nothing
+			System.out.println("Debug:Nothing to fix hear (just a simple return) ====================================================================================Debug4");
 			return;
 		}
+		System.out.println("Debug: I'm confused ====================================================================================Debug4");
+		
 		Sendgrid mail = newSendgrid();
 		mail.setTo(emailValue)
 				.setFrom("my-smart-line-service@mysmartline.eu")
@@ -37,7 +43,7 @@ public class MailService {
 
 	}
 
-	public static void sendThankYou(Long notificationId) {
+	public static void sendThankYou(String notificationId) {
 
 		String emailValue = NotificationItemService
 				.getNotificationValue(notificationId);
@@ -64,7 +70,7 @@ public class MailService {
 
 	}
 
-	public static void sendMessageToNewCustomer(Long notificationId,
+	public static void sendMessageToNewCustomer(String notificationId,
 			Long servicePointId) {
 		String servicePoint = "";
 		if (servicePointId != null) {

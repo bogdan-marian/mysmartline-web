@@ -12,3 +12,6 @@ git add -A
 git commit -m "the commit message"
 git pull origin master
 git push origin master
+
+lsof -i tcp:8080
+

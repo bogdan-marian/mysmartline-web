@@ -47,6 +47,9 @@ public class LineNumberService {
 	}
 
 	public static Key getKey(String id) {
+		if (id == null){
+			System.out.println("id is null");
+		}
 		return KeyFactory.stringToKey(id);
 	}
 

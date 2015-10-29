@@ -50,6 +50,7 @@ public class LineRegistrationController {
 				clientDetailsModel.getLineId(),
 				clientDetailsModel.getNotifType(),
 				clientDetailsModel.getEmail());
+		
 		if (!resultModel.isSuccesfullRegistration()) {
 			switch (resultModel.getReasonNotSuccesfull()) {
 			case ALREADY_IN_LINE:

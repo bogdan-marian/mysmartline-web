@@ -21,7 +21,7 @@ import eu.mysmartline.services.NotificationItemService;
 public class ClientPanelController {
 
 	@RequestMapping(value = "ClientPanel/viewStatus/{notificationId}", method = RequestMethod.GET)
-	public String viewStatus(@PathVariable Long notificationId, ModelMap model) {
+	public String viewStatus(@PathVariable String notificationId, ModelMap model) {
 		ClientStatusModel clientStatusModel = ClientStatusService
 				.getStatusByNotificationId(notificationId);
 		model.addAttribute(clientStatusModel);
@@ -30,7 +30,7 @@ public class ClientPanelController {
 
 	// TODO implement convertPrintTicket function
 	@RequestMapping(value = "ClientPanel/convertPrintTicket/{notificationId}", method = RequestMethod.GET)
-	public String convertPrintTicket(@PathVariable Long notificationId,
+	public String convertPrintTicket(@PathVariable String notificationId,
 			ModelMap model) {
 
 		/**
@@ -38,7 +38,7 @@ public class ClientPanelController {
 		 * somebody else. Please check your email for more details.
 		 */
 		NotificationItem notificationItem = NotificationItemService
-				.getByLongId(notificationId);
+				.getById(notificationId);
 		if (!notificationItem.getNotificationType().equals("print")
 				&& notificationItem.getNotificationType() != null) {
 			System.out.println("Bogdan Debug notificationType: "
@@ -74,7 +74,7 @@ public class ClientPanelController {
 			return "forward:/Error/securityViolation";
 		}
 		// i'm using the lineId as notificationId
-		Long notificationId = clientDetailsModel.getLineId();
+		String notificationId = clientDetailsModel.getLineId();
 		// for the moment only email
 		String notificationType = "email";
 		String notificationValue = clientDetailsModel.getEmail();
