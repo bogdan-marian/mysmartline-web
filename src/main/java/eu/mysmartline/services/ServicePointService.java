@@ -20,7 +20,7 @@ import eu.mysmartline.entities.ServicePoint;
 import eu.mysmartline.models.ClientStatusModel;
 
 public class ServicePointService {
-	public static ServicePoint getServicePoint(Long servicePointId) {
+	public static ServicePoint getServicePoint(String servicePointId) {
 		Key serviceKey = getKey(servicePointId);
 		EntityManager em = EmfService.getEntityManager();
 		em.getTransaction().begin();
@@ -29,12 +29,11 @@ public class ServicePointService {
 		return servicePoint;
 	}
 
-	public static Key getKey(Long serviceId) {
-		return KeyFactory.createKey(ServicePoint.class.getSimpleName(),
-				serviceId);
+	public static Key getKey(String serviceId) {
+		return KeyFactory.stringToKey(serviceId);
 	}
 
-	public static String getShortName(Long serviceId) {
+	public static String getShortName(String serviceId) {
 		ServicePoint servicePoint = getServicePoint(serviceId);
 		return servicePoint.getShortName();
 	}
@@ -64,14 +63,14 @@ public class ServicePointService {
 		return clientStatusModel;
 	}
 
-	public static LineNumber getCurrentNumberAtServicePoint(Long servicePointId) {
+	public static LineNumber getCurrentNumberAtServicePoint(String servicePointId) {
 		// TODO implement logic
 		Key serviceKey = getKey(servicePointId);
 		EntityManager em = EmfService.getEntityManager();
 		em.getTransaction().begin();
 
 		em.getTransaction().rollback();
-		return null;
+		throw new IllegalStateException("Does this needs to be implemented?");
 	}
 
 	public static List<ServicePoint> getActivePoints() {
@@ -89,7 +88,7 @@ public class ServicePointService {
 		return servicePoints;
 	}
 
-	public static void archive(Long servicePointId) {
+	public static void archive(String servicePointId) {
 		// TODO Auto-generated method stub
 		Key serviceKey = ServicePointService.getKey(servicePointId);
 		EntityManager em = EmfService.getEntityManager();

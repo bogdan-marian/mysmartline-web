@@ -108,7 +108,7 @@ public class ServicePointController {
 	}
 
 	@RequestMapping(value = "ServicePoint/notificationPanel/{servicePointId}")
-	public String notificationPanel(@PathVariable Long servicePointId,
+	public String notificationPanel(@PathVariable String servicePointId,
 			ModelMap model) {
 		if (!MySecurity.canManageServicePoint(servicePointId)) {
 			return "forward:/Error/securityViolation";

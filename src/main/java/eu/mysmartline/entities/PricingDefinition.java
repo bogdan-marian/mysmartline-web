@@ -5,33 +5,28 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.datanucleus.api.jpa.annotations.Extension;
+
 import com.google.appengine.api.datastore.Key;
 
 @Entity
 public class PricingDefinition {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Key id;
-	private Long longPartId;
+	@Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")
+	private String id;
 	
 	private boolean isValid = true;
 	private String pricingName;
 	private Integer priceInEuro;
 	private Integer monthsValid;
 	private Integer nrOfLines;
-	
-	
-	public Key getId() {
+	//generated items
+	public String getId() {
 		return id;
 	}
-	public void setId(Key id) {
+	public void setId(String id) {
 		this.id = id;
-	}
-	public Long getLongPartId() {
-		return longPartId;
-	}
-	public void setLongPartId(Long longPartId) {
-		this.longPartId = longPartId;
 	}
 	public boolean isValid() {
 		return isValid;
@@ -63,5 +58,4 @@ public class PricingDefinition {
 	public void setNrOfLines(Integer nrOfLines) {
 		this.nrOfLines = nrOfLines;
 	}
-	
 }

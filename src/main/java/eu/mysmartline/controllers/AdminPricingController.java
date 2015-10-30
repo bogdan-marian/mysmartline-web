@@ -53,13 +53,6 @@ public class AdminPricingController {
 			em.getTransaction().begin();
 			em.persist(pricingDefinition);
 			em.getTransaction().commit();
-
-			// populate the longId
-			em.getTransaction().begin();
-			PricingDefinition pricing = em.find(PricingDefinition.class,
-					pricingDefinition.getId());
-			pricing.setLongPartId(pricing.getId().getId());
-			em.getTransaction().commit();
 		}
 		return "redirect:index";
 	}

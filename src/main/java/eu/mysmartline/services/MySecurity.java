@@ -27,7 +27,7 @@ public class MySecurity {
 		return userId.equals(lineUserId);
 	}
 
-	public static boolean canManageDevice(Long deviceId) {
+	public static boolean canManageDevice(String deviceId) {
 		Device device = DeviceRegistrationService.getDevice(deviceId);
 		if (device == null) {
 			return false;
@@ -55,7 +55,7 @@ public class MySecurity {
 		}
 	}
 
-	public static boolean canManageServicePoint(Long servicePointId) {
+	public static boolean canManageServicePoint(String servicePointId) {
 		// TODO Auto-generated method stub
 		ServicePoint servicePoint = ServicePointService
 				.getServicePoint(servicePointId);

@@ -12,7 +12,6 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserServiceFactory;
 
 import eu.mysmartline.entities.Device;
-import eu.mysmartline.entities.Line;
 import eu.mysmartline.models.DeviceRegistrationResponceModel;
 import eu.mysmartline.models.GcmActivateDevice;
 
@@ -49,13 +48,6 @@ public class DeviceRegistrationService {
 			device.setGcmRegId(gcmRegId);
 			em.getTransaction().begin();
 			em.persist(device);
-			em.getTransaction().commit();
-
-			// add long id
-			em.getTransaction().begin();
-			device = em.find(Device.class, device.getId());
-			device.setLongPartId(device.getId().getId());
-			device.setShortId(device.getLongPartId().toString());
 			em.getTransaction().commit();
 			if (em.getTransaction().isActive()) {
 				// Response model describes no success
@@ -110,11 +102,11 @@ public class DeviceRegistrationService {
 		return device;
 	}
 
-	public static Key getKey(Long deviceId) {
-		return KeyFactory.createKey(Device.class.getSimpleName(), deviceId);
+	public static Key getKey(String deviceId) {
+		return KeyFactory.stringToKey(deviceId);
 	}
 
-	public static Device getDevice(Long deviceId) {
+	public static Device getDevice(String deviceId) {
 		EntityManager em = EmfService.getEntityManager();
 		em.getTransaction().begin();
 		Key deviceKey = getKey(deviceId);
@@ -123,7 +115,7 @@ public class DeviceRegistrationService {
 		return device;
 	}
 
-	public static Device reneme(Long deviceId, String userFrendlyName) {
+	public static Device reneme(String deviceId, String userFrendlyName) {
 		EntityManager em = EmfService.getEntityManager();
 		em.getTransaction().begin();
 		Key deviceKey = getKey(deviceId);
@@ -198,14 +190,14 @@ public class DeviceRegistrationService {
 		em.getTransaction().commit();
 		return true;
 	}
-	public static void resetDeviceFromServerSide(Long deviceId){
+	public static void resetDeviceFromServerSide(String deviceId){
 		//only delete user association
 		Device device = getDevice(deviceId);
 		String deviceGcmId = device.getGcmRegId();
 		resetDevice(deviceGcmId);
 		MyHttpService.nofityDeviceWasReset(deviceGcmId);
 	}
-	public static void setUserId(Long deviceId, String userId){
+	public static void setUserId(String deviceId, String userId){
 		Key deviceKey = getKey(deviceId);
 		EntityManager em = EmfService.getEntityManager();
 		em.getTransaction().begin();

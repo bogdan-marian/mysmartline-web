@@ -31,14 +31,14 @@ public class ActivateNextNumberService {
 	 * key is the notification id value is a string composed of Number an
 	 * notification value
 	 */
-	public static Map<Long, String> getNotificationSetByLineId(String lineId) {
+	public static Map<String, String> getNotificationSetByLineId(String lineId) {
 
 		String label = LineService.getLabel(lineId);
 		Map<LineNumber, NotificationItem> clients = LineService
 				.getWaitingClients(lineId);
-		Map<Long, String> map = new LinkedHashMap<Long, String>();
+		Map<String, String> map = new LinkedHashMap<String, String>();
 		for (Map.Entry<LineNumber, NotificationItem> entry : clients.entrySet()) {
-			map.put(entry.getValue().getLongPartId(), label
+			map.put(entry.getValue().getId(), label
 					+ entry.getKey().getNumber() + " ("
 					+ entry.getValue().getNotificationValue() + ")");
 		}

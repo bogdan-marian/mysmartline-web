@@ -7,14 +7,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.datanucleus.api.jpa.annotations.Extension;
+
 import com.google.appengine.api.datastore.Key;
 
 @Entity
 public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Key id;
-	private Long longPartId;
+	@Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")
+	private String id;
 	private String userId;
 	
 	/**this is the id that will be used to identify
@@ -32,19 +34,12 @@ public class Order {
 	private Date dateOfOrder;
 	private Date dateOfPayment;
 	private boolean processed = false;
-
 	//getters and setters
-	public Key getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Key id) {
+	public void setId(String id) {
 		this.id = id;
-	}
-	public Long getLongPartId() {
-		return longPartId;
-	}
-	public void setLongPartId(Long longPartId) {
-		this.longPartId = longPartId;
 	}
 	public String getUserId() {
 		return userId;
@@ -52,11 +47,29 @@ public class Order {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	public String getPayServiceId() {
+		return payServiceId;
+	}
+	public void setPayServiceId(String payServiceId) {
+		this.payServiceId = payServiceId;
+	}
+	public String getPayServiceName() {
+		return payServiceName;
+	}
+	public void setPayServiceName(String payServiceName) {
+		this.payServiceName = payServiceName;
+	}
 	public Key getPricingDefinitionId() {
 		return pricingDefinitionId;
 	}
 	public void setPricingDefinitionId(Key pricingDefinitionId) {
 		this.pricingDefinitionId = pricingDefinitionId;
+	}
+	public Integer getNrOfPricingUnits() {
+		return nrOfPricingUnits;
+	}
+	public void setNrOfPricingUnits(Integer nrOfPricingUnits) {
+		this.nrOfPricingUnits = nrOfPricingUnits;
 	}
 	public String getPricingName() {
 		return pricingName;
@@ -70,29 +83,11 @@ public class Order {
 	public void setPricingValue(Integer pricingValue) {
 		this.pricingValue = pricingValue;
 	}
-	public Integer getNrOfPricingUnits() {
-		return nrOfPricingUnits;
-	}
-	public void setNrOfPricingUnits(Integer nrOfPricingUnits) {
-		this.nrOfPricingUnits = nrOfPricingUnits;
-	}
 	public Integer getOrderValue() {
 		return orderValue;
 	}
 	public void setOrderValue(Integer orderValue) {
 		this.orderValue = orderValue;
-	}
-	public String getPayServiceId() {
-		return payServiceId;
-	}
-	public void setPayServiceId(String payServiceId) {
-		this.payServiceId = payServiceId;
-	}
-	public String getPayServiceName() {
-		return payServiceName;
-	}
-	public void setPayServiceName(String payServiceName) {
-		this.payServiceName = payServiceName;
 	}
 	public Date getDateOfOrder() {
 		return dateOfOrder;
@@ -112,7 +107,4 @@ public class Order {
 	public void setProcessed(boolean processed) {
 		this.processed = processed;
 	}
-	
-	
-	
 }

@@ -25,13 +25,6 @@ public class ActivationItemService {
 		em.getTransaction().begin();
 		em.persist(activationItem);
 		em.getTransaction().commit();
-
-		// populate the longId
-		em.getTransaction().begin();
-		ActivationItem item = em.find(ActivationItem.class,
-				activationItem.getId());
-		item.setLongPartId(item.getId().getId());
-		em.getTransaction().commit();
 	}
 
 	/**
@@ -129,12 +122,6 @@ public class ActivationItemService {
 		EntityManager em = EmfService.getEntityManager();
 		em.getTransaction().begin();
 		em.persist(activationItem);
-		em.getTransaction().commit();
-		
-		//populate the longId;
-		em.getTransaction().begin();
-		activationItem = em.find(ActivationItem.class, activationItem.getId());
-		activationItem.setLongPartId(activationItem.getId().getId());
 		em.getTransaction().commit();
 	}
 }

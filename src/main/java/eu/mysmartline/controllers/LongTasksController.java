@@ -32,7 +32,7 @@ public class LongTasksController {
 			if (before >= i) {
 				if (client.getValue().getNotificationType().equals("email")) {
 					MailService.sendUpdateMessage(client.getValue()
-							.getLongPartId());
+							.getId());
 				}
 			}
 			i++;

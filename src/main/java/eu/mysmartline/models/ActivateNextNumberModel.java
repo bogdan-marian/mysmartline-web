@@ -2,20 +2,20 @@ package eu.mysmartline.models;
 
 
 public class ActivateNextNumberModel {
-	private Long notificationId;
-	private Long servicePointId;
+	private String notificationId;
+	private String servicePointId;
 	private String lineId;
 	
-	public Long getNotificationId() {
+	public String getNotificationId() {
 		return notificationId;
 	}
-	public void setNotificationId(Long notificationId) {
+	public void setNotificationId(String notificationId) {
 		this.notificationId = notificationId;
 	}
-	public Long getServicePointId() {
+	public String getServicePointId() {
 		return servicePointId;
 	}
-	public void setServicePointId(Long servicePointId) {
+	public void setServicePointId(String servicePointId) {
 		this.servicePointId = servicePointId;
 	}
 	public String getLineId() {
@@ -25,7 +25,5 @@ public class ActivateNextNumberModel {
 		this.lineId = lineId;
 	}
 	
-	
-	
-	
+		
 }

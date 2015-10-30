@@ -29,7 +29,7 @@ public class DeviceManagementController {
 			return "DeviceManagement/goToNotPosible";
 			
 		} else {
-			model.addAttribute("activationId", device.getLongPartId());
+			model.addAttribute("activationId", device.getId());
 			return "DeviceManagement/goToRename";
 			
 		}
@@ -44,7 +44,7 @@ public class DeviceManagementController {
 	}
 
 	@RequestMapping(value = "DeviceManagement/renameGet/{deviceId}", method = RequestMethod.GET)
-	public String renameGet(@PathVariable Long deviceId, ModelMap model) {
+	public String renameGet(@PathVariable String deviceId, ModelMap model) {
 		if(!MySecurity.canManageDevice(deviceId)){
 			return "forward:/Error/securityViolation";
 		}
@@ -56,10 +56,10 @@ public class DeviceManagementController {
 	@RequestMapping(value = "DeviceManagement/renamePost", method = RequestMethod.POST)
 	public String renamePost(@Valid Device device, BindingResult bindingResult,
 			ModelMap model) {
-		if(!MySecurity.canManageDevice(device.getLongPartId())){
+		if(!MySecurity.canManageDevice(device.getId())){
 			return "forward:/Error/securityViolation";
 		}
-		DeviceRegistrationService.reneme(device.getLongPartId(), device.getUserFrendlyName());
+		DeviceRegistrationService.reneme(device.getId(), device.getUserFrendlyName());
 		return "redirect: index";
 	}
 	
@@ -70,7 +70,7 @@ public class DeviceManagementController {
 		return "DeviceManagement/index";
 	}
 	@RequestMapping(value = "DeviceManagement/details/{deviceId}", method = RequestMethod.GET)
-	public String details(@PathVariable Long deviceId, ModelMap model){
+	public String details(@PathVariable String deviceId, ModelMap model){
 		if (!MySecurity.canManageDevice(deviceId)){
 			return "forward:/Error/securityViolation";
 		}
@@ -79,7 +79,7 @@ public class DeviceManagementController {
 		return "DeviceManagement/details";
 	}
 	@RequestMapping(value = "DeviceManagement/delete/{deviceId}", method = RequestMethod.GET)
-	public String delete(@PathVariable Long deviceId, ModelMap model){
+	public String delete(@PathVariable String deviceId, ModelMap model){
 		if (!MySecurity.canManageDevice(deviceId)){
 			return "forward:/Error/securityViolation";
 		}
@@ -88,7 +88,7 @@ public class DeviceManagementController {
 	}
 	
 	@RequestMapping(value = "DeviceManagement/renameByUser/{deviceId}", method = RequestMethod.GET)
-	public String renameByUser(@PathVariable Long deviceId, ModelMap model){
+	public String renameByUser(@PathVariable String deviceId, ModelMap model){
 		if(!MySecurity.canManageDevice(deviceId)){
 			return "forward:/Error/securityViolation";
 		}
@@ -99,10 +99,10 @@ public class DeviceManagementController {
 	@RequestMapping(value = "DeviceManagement/renameByUserPost", method = RequestMethod.POST)
 	public String renameByUserPost(@Valid Device device, BindingResult bindingResult,
 			ModelMap model) {
-		if(!MySecurity.canManageDevice(device.getLongPartId())){
+		if(!MySecurity.canManageDevice(device.getId())){
 			return "forward:/Error/securityViolation";
 		}
-		DeviceRegistrationService.reneme(device.getLongPartId(), device.getUserFrendlyName());
+		DeviceRegistrationService.reneme(device.getId(), device.getUserFrendlyName());
 		return "redirect: index";
 	}
 }

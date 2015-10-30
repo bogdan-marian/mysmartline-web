@@ -127,16 +127,15 @@ public class ApiController {
 		}
 
 		String stringId = apiActivateValidateRequest.getShortAndLongId();
-		Long longId = Long.parseLong(stringId);
-		Device device = DeviceRegistrationService.getDevice(longId);
+		Device device = DeviceRegistrationService.getDevice(stringId);
 		
 		if (device == null) {
-			responce.setDetailsAboutFailure("Ilegal request type 1 [" + longId
+			responce.setDetailsAboutFailure("Ilegal request type 1 [" + stringId
 					+ "]");
 			return gson.toJson(responce);
 		}
 		log.info("bogdan log 2 located device: "
-				+ " longPartId = " + device.getLongPartId()
+				+ " id = " + device.getId()
 				+ " userId = " + device.getUserId()
 				+ " gcmRegId = " + device.getGcmRegId()
 				+ " shortId = " + device.getShortId() 
@@ -146,7 +145,7 @@ public class ApiController {
 		String cloudGcmId = device.getGcmRegId();
 		String deviceGcmId = device.getGcmRegId();
 		if (!cloudGcmId.equals(deviceGcmId)) {
-			responce.setDetailsAboutFailure("Ilegal request type 2 [" + longId
+			responce.setDetailsAboutFailure("Ilegal request type 2 [" + stringId
 					+ "]");
 			return gson.toJson(responce);
 		}
@@ -166,7 +165,7 @@ public class ApiController {
 				+ " userEmail = " + settingsUser.getUserEmail()
 				);
 
-		Long deviceId = device.getLongPartId();
+		String deviceId = device.getId();
 		String userId = settingsUser.getUserId();
 		DeviceRegistrationService.setUserId(deviceId, userId);
 

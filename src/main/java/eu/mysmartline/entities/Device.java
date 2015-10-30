@@ -7,33 +7,28 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.datanucleus.api.jpa.annotations.Extension;
+
 import com.google.appengine.api.datastore.Key;
 
 @Entity
 public class Device {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Key id;
-	private Long longPartId;
+	@Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")
+	private String id;
 	private String userId;
 	
 	private Date dateCreated;
 	private String gcmRegId;
 	private String shortId;
 	private String userFrendlyName;
-	
 	//getters and setters
-	public Key getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Key id) {
+	public void setId(String id) {
 		this.id = id;
-	}
-	public Long getLongPartId() {
-		return longPartId;
-	}
-	public void setLongPartId(Long longPartId) {
-		this.longPartId = longPartId;
 	}
 	public String getUserId() {
 		return userId;
@@ -65,6 +60,4 @@ public class Device {
 	public void setUserFrendlyName(String userFrendlyName) {
 		this.userFrendlyName = userFrendlyName;
 	}
-	
-	
 }

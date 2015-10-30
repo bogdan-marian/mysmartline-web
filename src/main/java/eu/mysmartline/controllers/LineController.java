@@ -75,10 +75,10 @@ public class LineController {
 			ActivateNextNumberModel activateNextNumberModel = new ActivateNextNumberModel();
 			activateNextNumberModel.setLineId(id);
 			
-			Map<Long, String> clients = ActivateNextNumberService
+			Map<String, String> clients = ActivateNextNumberService
 					.getNotificationSetByLineId(id);
 			//set probable next client
-			for(Entry<Long, String> entry :clients.entrySet()){
+			for(Entry<String, String> entry :clients.entrySet()){
 				activateNextNumberModel.setNotificationId(entry.getKey());
 				break;
 			}
