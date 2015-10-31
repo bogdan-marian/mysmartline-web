@@ -34,7 +34,7 @@ public class ActivationItemService {
 	 * @param orderId
 	 * @return
 	 */
-	public static List<ActivationItem> getActiveKeysByOrderId(Long orderId) {
+	public static List<ActivationItem> getActiveKeysByOrderId(String orderId) {
 		Key orderKey = OrderService.getKey(orderId);
 		String userId = MySecurity.getUserId();
 
@@ -100,16 +100,16 @@ public class ActivationItemService {
 		query.setParameter("theArchived", false);
 		return query.getResultList();
 	}
-	public static ActivationItem getByLongId(Long longId){
-		Key key = getKey(longId);
+	public static ActivationItem getById(String activationId){
+		Key key = getKey(activationId);
 		EntityManager em = EmfService.getEntityManager();
 		em.getTransaction().begin();
 		ActivationItem activationItem = em.find(ActivationItem.class, key);
 		em.getTransaction().rollback();
 		return activationItem;
 	}
-	public static Key getKey(Long longId) {
-		return KeyFactory.createKey(ActivationItem.class.getSimpleName(), longId);
+	public static Key getKey(String activationItemId) {
+		return KeyFactory.stringToKey(activationItemId);
 	}
 	
 	public static void createBetaItem(){

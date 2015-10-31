@@ -80,7 +80,7 @@ public class PayController {
 	
 	private OrderModel buildOrderModel(PricingDefinition price){
 		OrderModel orderModel = new OrderModel();
-		orderModel.setPriceDefinitionId(price.getLongPartId());
+		orderModel.setPriceDefinitionId(price.getId());
 		orderModel.setPricingValue(price.getPriceInEuro());
 		orderModel.setNrOfPricingUnits(1);
 		return orderModel;
@@ -112,10 +112,9 @@ public class PayController {
 			// populate the long and compute values
 			em.getTransaction().begin();
 			Order myOrder = em.find(Order.class, order.getId());
-			myOrder.setLongPartId(myOrder.getId().getId());
+			
 
 			myOrder.setPayServiceName("PayPall");
-			myOrder.setPayServiceId(myOrder.getLongPartId().toString());
 
 			myOrder.setPricingName(price.getPricingName());
 			myOrder.setPricingValue(price.getPriceInEuro());
@@ -161,7 +160,7 @@ public class PayController {
 	}
 	
 	@RequestMapping(value = "Pay/useAllItems/{orderId}")
-	public String useAllItems(@PathVariable Long orderId, ModelMap model) {
+	public String useAllItems(@PathVariable String orderId, ModelMap model) {
 		List<ActivationItem> activationItems = ActivationItemService.getActiveKeysByOrderId(orderId);
 		String userId = MySecurity.getUserId();
 		List<Line> lines = LineService.getLinesByUserId(userId);

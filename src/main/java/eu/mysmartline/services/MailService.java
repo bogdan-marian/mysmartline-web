@@ -71,7 +71,7 @@ public class MailService {
 	}
 
 	public static void sendMessageToNewCustomer(String notificationId,
-			Long servicePointId) {
+			String servicePointId) {
 		String servicePoint = "";
 		if (servicePointId != null) {
 			servicePoint = "at "

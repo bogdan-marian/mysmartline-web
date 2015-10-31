@@ -2,18 +2,18 @@ package eu.mysmartline.models;
 
 public class ExtentionModel {
 	private String lineId;
-	private Long activationItemId;
+	private String activationItemId;
+	//generated items
 	public String getLineId() {
 		return lineId;
 	}
 	public void setLineId(String lineId) {
 		this.lineId = lineId;
 	}
-	public Long getActivationItemId() {
+	public String getActivationItemId() {
 		return activationItemId;
 	}
-	public void setActivationItemId(Long activationItemId) {
+	public void setActivationItemId(String activationItemId) {
 		this.activationItemId = activationItemId;
 	}
-	
 }

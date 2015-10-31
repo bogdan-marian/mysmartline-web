@@ -84,10 +84,10 @@ public class LineController {
 			}
 
 			// populate service points
-			Map<Long, String> newServicePoints = ActivateNextNumberService
+			Map<String, String> newServicePoints = ActivateNextNumberService
 					.getActiveServicePointsMap();
 			// set first service point
-			for (Entry<Long, String> entry : newServicePoints.entrySet()) {
+			for (Entry<String, String> entry : newServicePoints.entrySet()) {
 				activateNextNumberModel.setServicePointId(entry.getKey());
 				break;
 			}
@@ -134,17 +134,17 @@ public class LineController {
 		LineModel lineModel = new LineModel();
 		lineModel.setLine(line);
 
-		Map<Long, String> activationItems = new LinkedHashMap<Long, String>();
+		Map<String, String> activationItems = new LinkedHashMap<String, String>();
 		Date date = new Date();
 		Calendar calendar = Calendar.getInstance();
 		for (ActivationItem item : items) {
 			calendar.setTime(date);
 			calendar.add(Calendar.MONTH, item.getNrOfMonts());
-			activationItems.put(item.getLongPartId(), calendar.getTime()
+			activationItems.put(item.getId(), calendar.getTime()
 					.toString());
 		}
 		ActivationItem firstItem = items.get(0);
-		lineModel.setActivationItem(firstItem.getLongPartId());
+		lineModel.setActivationItem(firstItem.getId());
 		model.addAttribute(lineModel);
 		model.addAttribute("activationItems", activationItems);
 		return "Line/create";
@@ -158,7 +158,7 @@ public class LineController {
 			return "forward:/Error/securityViolation";
 		}
 		if (!bindingResult.hasErrors()) {
-			ActivationItem item = ActivationItemService.getByLongId(lineModel
+			ActivationItem item = ActivationItemService.getById(lineModel
 					.getActivationItem());
 			if (item.isArchived()) {
 				return "forward:/Error/securityViolation";
@@ -241,13 +241,13 @@ public class LineController {
 			return "redirect:/Pricing/index";
 		}
 		Line line = LineService.getLine(lineId);
-		Map<Long, String> activationItems = new LinkedHashMap<Long, String>();
+		Map<String, String> activationItems = new LinkedHashMap<String, String>();
 		Date date = line.getValidUntil();
 		Calendar calendar = Calendar.getInstance();
 		for (ActivationItem item : items) {
 			calendar.setTime(date);
 			calendar.add(Calendar.MONTH, item.getNrOfMonts());
-			activationItems.put(item.getLongPartId(), calendar.getTime()
+			activationItems.put(item.getId(), calendar.getTime()
 					.toString());
 		}
 		ActivationItem firstItem = items.get(0);
@@ -255,7 +255,7 @@ public class LineController {
 
 		ExtentionModel extentionModel = new ExtentionModel();
 		extentionModel.setLineId(lineId);
-		extentionModel.setActivationItemId(firstItem.getLongPartId());
+		extentionModel.setActivationItemId(firstItem.getId());
 
 		model.addAttribute(extentionModel);
 		model.addAttribute("activationItems", activationItems);
@@ -274,7 +274,7 @@ public class LineController {
 			return "forward:/Error/securityViolation";
 		}
 		Line line = LineService.getLine(extentionModel.getLineId());
-		ActivationItem item = ActivationItemService.getByLongId(extentionModel
+		ActivationItem item = ActivationItemService.getById(extentionModel
 				.getActivationItemId());
 		if (item.isArchived()) {
 			return "forward:/Error/defaultError";

@@ -45,14 +45,14 @@ public class ActivateNextNumberService {
 		return map;
 	}
 
-	public static Map<Long, String> getNotificationsetByServicePointId(
-			Long pointId) {
+	public static Map<String, String> getNotificationsetByServicePointId(
+			String pointId) {
 		Map<LineNumber, NotificationItem> clients = ServicePointService
 				.getWaitingClients(pointId);
-		Map<Long, String> map = new LinkedHashMap<Long, String>();
+		Map<String, String> map = new LinkedHashMap<String, String>();
 		for (Map.Entry<LineNumber, NotificationItem> entry : clients.entrySet()) {
-			String label = entry.getKey().getLine().getLineLabel();
-			Long notifId = entry.getValue().getLongPartId();
+			String label = LineService.getLine(entry.getKey().getLineId()).getLineLabel();
+			String notifId = entry.getValue().getId();
 			int clientNumber = entry.getKey().getNumber();
 			String notifValue = " (" + entry.getValue().getNotificationValue()
 					+ ")";
@@ -62,25 +62,25 @@ public class ActivateNextNumberService {
 		return map;
 	}
 
-	public static Set<Map.Entry<Long, String>> getServiceSetByLineId(Long lineId) {
+	public static Set<Map.Entry<String, String>> getServiceSetByLineId(String lineId) {
 		List<ServicePoint> servicePoints = ServicePointService
 				.getAllByLineId(lineId);
 
-		Map<Long, String> map2 = new LinkedHashMap<Long, String>();
+		Map<String, String> map2 = new LinkedHashMap<String, String>();
 		for (ServicePoint servicePoint : servicePoints) {
-			map2.put(servicePoint.getLongPartId(), servicePoint.getShortName());
+			map2.put(servicePoint.getId(), servicePoint.getShortName());
 
 		}
 
 		return map2.entrySet();
 	}
 
-	public static Map<Long, String> getActiveServicePointsMap() {
-		Map<Long, String> map = new HashMap<Long, String>();
+	public static Map<String, String> getActiveServicePointsMap() {
+		Map<String, String> map = new HashMap<String, String>();
 		List<ServicePoint> servicePoints = ServicePointService
 				.getActivePoints();
 		for (ServicePoint servicePoint : servicePoints) {
-			map.put(servicePoint.getLongPartId(), servicePoint.getShortName());
+			map.put(servicePoint.getId(), servicePoint.getShortName());
 		}
 		return map;
 	}
@@ -91,7 +91,7 @@ public class ActivateNextNumberService {
 		Map<LineNumber, NotificationItem> map = LineService
 				.getWaitingClients(model.getLineId());
 		for (Map.Entry<LineNumber, NotificationItem> entry : map.entrySet()) {
-			if (entry.getValue().getId().getId() == model.getNotificationId()) {
+			if (entry.getValue().getId() == model.getNotificationId()) {
 				// archive current number
 				LineNumber currentNumber = LineService
 						.getCurrentLineNumber(model.getLineId());
@@ -99,7 +99,7 @@ public class ActivateNextNumberService {
 				if (currentNumber != null) {
 					// item located it will be archived
 					em.getTransaction().begin();
-					Key currentKey = currentNumber.getId();
+					String currentKey = currentNumber.getId();
 					currentNumber = em.find(LineNumber.class, currentKey);
 					currentNumber.setArchived(true);
 					currentNumber.setCurrent(false);
@@ -126,36 +126,37 @@ public class ActivateNextNumberService {
 							currentNumber.setSameDay(true);
 						}
 					}
-					NotificationItem oldCurent = currentNumber
-							.getNotificationItem();
+					String notifItemId = currentNumber.getNotificationItemId();
+					NotificationItem oldCurent = NotificationItemService.getById(notifItemId);
 					em.getTransaction().commit();
 
 					// send thank you notification to oldCurent
 					if (oldCurent.getNotificationType().equals("email")) {
-						MailService.sendThankYou(oldCurent.getLongPartId());
+						MailService.sendThankYou(oldCurent.getId());
 					}
 				}
 				// configure new customer and servicePoint
 				ServicePoint servicePoint = ServicePointService
 						.getServicePoint(model.getServicePointId());
 				em.getTransaction().begin();
-				Key newKey = entry.getKey().getId();
-				Key serviceKey = servicePoint.getId();
+				String newKey = entry.getKey().getId();
+				String serviceKey = servicePoint.getId();
 				servicePoint = em.find(ServicePoint.class, serviceKey);
 				LineNumber newCurrent = em.find(LineNumber.class, newKey);
 
 				newCurrent.setCurrent(true);
 				if (servicePoint != null) {
-					newCurrent.setServicePoint(servicePoint);
+					newCurrent.setServicePointId(servicePoint.getId());
 					newCurrent.setDateActivated(new Date());
 				}
-				NotificationItem newCustomer = newCurrent.getNotificationItem();
+				String newCustomerId = newCurrent.getNotificationItemId();
+				NotificationItem newCustomer = NotificationItemService.getById(newCustomerId);
 				em.getTransaction().commit();
 				// set service point
 
 				// send notification to newCurrent
 				MailService.sendMessageToNewCustomer(
-						newCustomer.getLongPartId(), model.getServicePointId());
+						newCustomer.getId(), model.getServicePointId());
 
 				// send notifications to valid waiting clients
 				Queue queue = QueueFactory.getDefaultQueue();

@@ -38,11 +38,10 @@ public class ServicePointService {
 		return servicePoint.getShortName();
 	}
 
-	public static List<ServicePoint> getAllByLineId(Long lineId) {
-		/*Line line = LineService.getLine(lineId);
+	public static List<ServicePoint> getAllByLineId(String lineId) {
+		Line line = LineService.getLine(lineId);
 		String userId = line.getUserId();
-		return getAllByUserId(userId);*/
-		throw new IllegalStateException("Please finish this");
+		return getAllByUserId(userId);
 	}
 
 	public static List<ServicePoint> getAllByUserId(String userId) {
@@ -103,8 +102,8 @@ public class ServicePointService {
 	}
 
 	public static Map<LineNumber, NotificationItem> getWaitingClients(
-			Long pointId) {
-		/*Map<LineNumber, NotificationItem> map = new LinkedHashMap<LineNumber, NotificationItem>();
+			String pointId) {
+		Map<LineNumber, NotificationItem> map = new LinkedHashMap<LineNumber, NotificationItem>();
 		String theUserId = MySecurity.getUserId();
 		if (theUserId == null){
 			return map;
@@ -117,12 +116,11 @@ public class ServicePointService {
 		List<Line> lines = query.getResultList();
 		em.getTransaction().rollback();
 		for (Line line : lines) {
-			Map<LineNumber, NotificationItem> subMap = LineService.getWaitingClients(line.getLongPartId());
+			Map<LineNumber, NotificationItem> subMap = LineService.getWaitingClients(line.getId());
 			for(Map.Entry<LineNumber, NotificationItem> entry: subMap.entrySet()){
 				map.put(entry.getKey(), entry.getValue());
 			}
 		}
-		return map;*/
-		throw new IllegalStateException("Please finish this");
+		return map;
 	}
 }

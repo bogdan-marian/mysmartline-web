@@ -1,22 +1,22 @@
 package eu.mysmartline.models;
 
 public class OrderModel {
-	private Long orderId;
-	private Long priceDefinitionId;
+	private String orderId;
+	private String priceDefinitionId;
 	private Integer pricingValue;
 	private Integer nrOfPricingUnits;
 	private Integer orderValue;
-	
-	public Long getOrderId() {
+	//generated items
+	public String getOrderId() {
 		return orderId;
 	}
-	public void setOrderId(Long orderId) {
+	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
-	public Long getPriceDefinitionId() {
+	public String getPriceDefinitionId() {
 		return priceDefinitionId;
 	}
-	public void setPriceDefinitionId(Long priceDefinitionId) {
+	public void setPriceDefinitionId(String priceDefinitionId) {
 		this.priceDefinitionId = priceDefinitionId;
 	}
 	public Integer getPricingValue() {
@@ -37,4 +37,5 @@ public class OrderModel {
 	public void setOrderValue(Integer orderValue) {
 		this.orderValue = orderValue;
 	}
+	
 }

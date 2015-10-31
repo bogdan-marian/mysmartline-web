@@ -37,7 +37,8 @@ public class OrderService {
 			Integer nrOfItems = order.getNrOfPricingUnits() * pricingDefinition.getNrOfLines();
 			for (int i = 0; i < nrOfItems; i++) {
 				//TODO create a push queue to do this
-				ActivationItemService.newItem(order.getId(), nrOfMonts);
+				Key orderKey = OrderService.getKey(order.getId()) ;
+				ActivationItemService.newItem(orderKey, nrOfMonts);
 			}
 			
 			em.getTransaction().begin();
@@ -62,7 +63,7 @@ public class OrderService {
 		return orders.get(0);
 	}
 	
-	public static Key getKey(Long orderId){
-		return KeyFactory.createKey(Order.class.getSimpleName(), orderId);
+	public static Key getKey(String orderId){
+		return KeyFactory.stringToKey(orderId);
 	}
 }

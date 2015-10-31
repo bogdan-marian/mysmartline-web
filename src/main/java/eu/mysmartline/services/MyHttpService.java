@@ -118,7 +118,7 @@ public class MyHttpService {
 		System.out.println(result);
 	}
 
-	public static void notifyDevicesResourceAccessed(Long lineId) {
+	public static void notifyDevicesResourceAccessed(String lineId) {
 		Sender sender = new Sender("AIzaSyBNcSqZK-ci4dNtjhSQZ5Gp6gkyeeu5xqM");
 
 		GcmLineRegistrationResourceWasAccessed resourceAccessed;
@@ -147,9 +147,8 @@ public class MyHttpService {
 		}
 	}
 	public static void sendWarmUpMessage(GcmWarmUp gcmWarmUp){
-		String longAsString = gcmWarmUp.getDeviceShortLongId();
-		Long longId = Long.parseLong(longAsString);
-		Device myDev = DeviceRegistrationService.getDevice(longId);
+		String deviceId = gcmWarmUp.getDeviceShortLongId();
+		Device myDev = DeviceRegistrationService.getDevice(deviceId);
 		if (myDev == null){
 			return;
 		}
@@ -180,9 +179,9 @@ public class MyHttpService {
 	}
 
 	public static void notifyDevicesCurrentNumberChanjed(String lineId,
-			Long ServicePointId) {
+			String ServicePointId) {
 		Sender sender = new Sender("AIzaSyBNcSqZK-ci4dNtjhSQZ5Gp6gkyeeu5xqM");
-/*
+
 		String myLabel = LineService.getLabel(lineId);
 		Integer numVal = LineService.getCurentNumber(lineId);
 		String displayMessage;
@@ -214,7 +213,7 @@ public class MyHttpService {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}*/
+		}
 		throw new UnsupportedOperationException("Please finish this");
 	}
 	public static void nofityDeviceWasReset(String deviceGcmId){

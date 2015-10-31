@@ -78,9 +78,6 @@ public class ServicePointController {
 			em.persist(servicePoint);
 			em.getTransaction().commit();
 			// populate the long id
-			em.getTransaction().begin();
-			servicePoint = em.find(ServicePoint.class, servicePoint.getId());
-			servicePoint.setLongPartId(servicePoint.getId().getId());
 			em.getTransaction().commit();
 
 		}
@@ -88,7 +85,7 @@ public class ServicePointController {
 	}
 
 	@RequestMapping(value = "ServicePoint/managePanel/{servicePointId}")
-	public String managePanel(@PathVariable Long servicePointId, ModelMap model) {
+	public String managePanel(@PathVariable String servicePointId, ModelMap model) {
 		if (!MySecurity.canManageServicePoint(servicePointId)) {
 			return "forward:/Error/securityViolation";
 		}
@@ -99,7 +96,7 @@ public class ServicePointController {
 	}
 
 	@RequestMapping(value = "ServicePoint/archive/{servicePointId}")
-	public String archive(@PathVariable Long servicePointId) {
+	public String archive(@PathVariable String servicePointId) {
 		if (!MySecurity.canManageServicePoint(servicePointId)) {
 			return "forward:/Error/securityViolation";
 		}
@@ -121,10 +118,10 @@ public class ServicePointController {
 		ActivateNextNumberModel activateNextNumberModel = new ActivateNextNumberModel();
 		activateNextNumberModel.setServicePointId(servicePointId);
 
-		Map<Long, String> clients = ActivateNextNumberService
+		Map<String, String> clients = ActivateNextNumberService
 				.getNotificationsetByServicePointId(servicePointId);
 		// set probable next client
-		for (Entry<Long, String> entry : clients.entrySet()) {
+		for (Entry<String, String> entry : clients.entrySet()) {
 			activateNextNumberModel.setNotificationId(entry.getKey());
 			break;
 		}

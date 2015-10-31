@@ -12,6 +12,7 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserServiceFactory;
 
 import eu.mysmartline.entities.Device;
+import eu.mysmartline.entities.Line;
 import eu.mysmartline.models.DeviceRegistrationResponceModel;
 import eu.mysmartline.models.GcmActivateDevice;
 
@@ -168,11 +169,10 @@ public class DeviceRegistrationService {
 		return devices;
 	}
 
-	public static List<Device> getDevicesByLineId(Long lineId) {
-		/*Line line = LineService.getLine(lineId);
+	public static List<Device> getDevicesByLineId(String lineId) {
+		Line line = LineService.getLine(lineId);
 		String userId = line.getUserId();
-		return getDevicesByUserId(userId);*/
-		throw new IllegalStateException("Please finish this");
+		return getDevicesByUserId(userId);
 	}
 
 	public static boolean resetDevice(String deviceGcmId) {

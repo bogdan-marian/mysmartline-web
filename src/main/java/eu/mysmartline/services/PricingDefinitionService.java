@@ -19,17 +19,16 @@ public class PricingDefinitionService {
 	 */
 	public static void saveEdit(PricingDefinition pricingDefinition) {
 		EntityManager em = EmfService.getEntityManager();
-		Key priceKey = getKey(pricingDefinition.getLongPartId());
+		/*String priceId = pricingDefinition.getId();
+		Key priceKey = getKey(priceId);*/
 
 		em.getTransaction().begin();
-		pricingDefinition.setId(priceKey);
 		em.persist(pricingDefinition);
 		em.getTransaction().commit();
 	}
 
-	public static Key getKey(Long priceId) {
-		return KeyFactory.createKey(PricingDefinition.class.getSimpleName(),
-				priceId);
+	public static Key getKey(String priceId) {
+		return KeyFactory.stringToKey(priceId);
 	}
 
 	/**

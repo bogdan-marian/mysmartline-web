@@ -15,6 +15,7 @@ public class SettingsUserService {
 		UserService userService = UserServiceFactory.getUserService();
 		if (userService.isUserLoggedIn()) {
 			String userId = userService.getCurrentUser().getUserId();
+			System.out.println("Debug: ======================= userId = " + userId);
 			if (!userInDataStore(userId)) {
 				// add the user
 				EntityManager em = EmfService.getEntityManager();
