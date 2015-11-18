@@ -54,12 +54,15 @@ public class LineRegistrationController {
 		if (!resultModel.isSuccesfullRegistration()) {
 			switch (resultModel.getReasonNotSuccesfull()) {
 			case ALREADY_IN_LINE:
+				System.out.println("debug: ALREADY_IN_LINE");
 				return "LineRegistration/allreadyInLine";
 			default:
+				System.out.println("Debug: LineRegistration/readClientDetailsPostError");
 				return "LineRegistration/readClientDetailsPostError";
 			}
 		}
 		model.addAttribute(resultModel);
+		System.out.println("Debug: LineRegistration/readClientDetailsPost");
 		return "LineRegistration/readClientDetailsPost";
 	}
 

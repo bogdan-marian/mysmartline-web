@@ -20,7 +20,7 @@
 							</p>
 							<p>
 								<a class="btn btn-success rounded"
-									href="/ClientPanel/viewStatus/${registrationResultModel.longNotificationItemId }"><i
+									href="/ClientPanel/viewStatus/${registrationResultModel.notificationItemId }"><i
 									class="icon-settings"></i> go to my status page</a>
 							</p>
 						</div>

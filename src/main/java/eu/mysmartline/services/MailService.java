@@ -1,5 +1,6 @@
 package eu.mysmartline.services;
 
+import eu.mysmartline.entities.AppSettings;
 import eu.mysmartline.models.MyKeys;
 
 public class MailService {
@@ -12,14 +13,11 @@ public class MailService {
 		
 		CounterService.addEmail(emailValue, MyKeys.MESSAGE_TYPE_EMAIL, userId);
 		// if it is a test then do not send the email;
-		System.out.println("==============================Prepare for test_domain = ");
 		
 		if (emailValue.contains(MyKeys.TEST_DOMAIN)) {
 			// test mail do nothing
-			System.out.println("Debug:Nothing to fix hear (just a simple return) ====================================================================================Debug4");
 			return;
 		}
-		System.out.println("Debug: I'm confused ====================================================================================Debug4");
 		
 		Sendgrid mail = newSendgrid();
 		mail.setTo(emailValue)
@@ -40,7 +38,6 @@ public class MailService {
 										.getClientUrl(notificationId));
 
 		mail.send();
-
 	}
 
 	public static void sendThankYou(String notificationId) {
@@ -140,6 +137,12 @@ public class MailService {
 	}
 
 	private static Sendgrid newSendgrid() {
-		return new Sendgrid(MyKeys.SENDGRID_USERNAME, MyKeys.SENDGRID_PASSWORD);
+		AppSettings userSettings = AppSettingsService.getSendgridUsername();
+		String username = userSettings.getValue();
+		AppSettings passwordSettings = AppSettingsService.getSendgridPassword();
+		String password = passwordSettings.getValue();
+		System.out.println("Debug username = " + username);
+		System.out.println("Debug password = " + password);
+		return new Sendgrid(username, password);
 	}
 }
