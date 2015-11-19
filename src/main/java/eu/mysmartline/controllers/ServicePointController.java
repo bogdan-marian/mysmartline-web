@@ -145,10 +145,9 @@ public class ServicePointController {
 
 		Line line = LineService.getLineByNotifId(activateNextNumberModel
 				.getNotificationId());
-		/*activateNextNumberModel.setLineId(line.getLongPartId());
+		activateNextNumberModel.setLineId(line.getId());
 		ActivateNextNumberService.activateNextNumber(activateNextNumberModel);
 		return "redirect:/ServicePoint/notificationPanel/"
-				+ activateNextNumberModel.getServicePointId();*/
-		throw new IllegalStateException("Please finish this");
+				+ activateNextNumberModel.getServicePointId();
 	}
 }

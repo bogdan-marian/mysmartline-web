@@ -33,10 +33,7 @@ public class ClientStatusService {
 		int clientsAhead = LineNumberService
 				.getClientsAhead(lineNumber.getId());
 		clientStatusModel.setClientsAhead(clientsAhead);
-		/**
-		 * TODO implement this for the moment just multiply clients ahead with
-		 * 15
-		 */
+
 		int averageWaitMinutes = (int) LineNumberService
 				.getAverageDuration(lineNumber.getId());
 

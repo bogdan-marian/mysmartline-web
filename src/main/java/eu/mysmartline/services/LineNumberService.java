@@ -69,7 +69,7 @@ public class LineNumberService {
 				.createQuery(
 						"select n from LineNumber n where  n.lineId = :vLineId and n.isArchived = :vIsArchived and n.sameDay = sameDay   order by n.dateArchived desc",
 						LineNumber.class);
-		query.setParameter("lineId", vLineId);
+		query.setParameter("vLineId", vLineId);
 		query.setParameter("vIsArchived", true);
 		query.setParameter("sameDay", true);
 		query.setMaxResults(10);
