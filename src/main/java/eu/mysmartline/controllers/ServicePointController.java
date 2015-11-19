@@ -37,15 +37,16 @@ public class ServicePointController {
 
 	@RequestMapping(value = "ServicePoint/index")
 	public String index(ModelMap model) {
-		/*
-		 * String userId = us.getCurrentUser().getUserId(); EntityManager em =
-		 * EmfService.getEntityManager(); em.getTransaction().begin();
-		 * TypedQuery<ServicePoint> query = em.createQuery(
-		 * "select s from ServicePoint s where s.userId = :theUserId",
-		 * ServicePoint.class); query.setParameter("theUserId", userId);
-		 * List<ServicePoint> servicePoint = query.getResultList();
-		 * em.getTransaction().rollback();
-		 */
+		/*String userId = us.getCurrentUser().getUserId();
+		EntityManager em = EmfService.getEntityManager();
+		em.getTransaction().begin();
+		TypedQuery<ServicePoint> query = em.createQuery(
+				"select s from ServicePoint s where s.userId = :theUserId",
+				ServicePoint.class);
+		query.setParameter("theUserId", userId);
+		List<ServicePoint> servicePoint = query.getResultList();
+		em.getTransaction().rollback();*/
+ 
 		List<ServicePoint> servicePoint = ServicePointService.getActivePoints();
 		model.addAttribute("servicePoint", servicePoint);
 		return "ServicePoint/index";
@@ -77,9 +78,6 @@ public class ServicePointController {
 			em.getTransaction().begin();
 			em.persist(servicePoint);
 			em.getTransaction().commit();
-			// populate the long id
-			em.getTransaction().commit();
-
 		}
 		return "redirect:index";
 	}

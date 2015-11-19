@@ -11,14 +11,14 @@
     <properties>
         <app.id>mysmartlinewebdebug</app.id>
         <app.version>debug-2</app.version>
-        <appengine.version>1.9.27</appengine.version>
+        <appengine.version>1.9.28</appengine.version>
         <gcloud.plugin.version>2.0.9.74.v20150814</gcloud.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
         
-        <spring.version>4.0.1.RELEASE</spring.version>
-        <tiles-version>3.0.3</tiles-version>
-        <org.slf4j-version>1.6.6</org.slf4j-version>
+        <spring.version>4.2.3.RELEASE</spring.version>
+        <tiles-version>3.0.5</tiles-version>
+        <org.slf4j-version>1.7.13</org.slf4j-version>
         <datanucleus.jpa.version>3.1.1</datanucleus.jpa.version>
     </properties>
 
@@ -37,7 +37,7 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
+            <version>3.0-alpha-1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -48,7 +48,7 @@
         <dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
-			<version>2.4</version>
+			<version>2.9.1</version>
 		</dependency>
 		
 		<!-- Spring dependencies -->
@@ -107,7 +107,7 @@
 		<dependency>
 			<groupId>javax.jdo</groupId>
 			<artifactId>jdo-api</artifactId>
-			<version>3.0.1</version>
+			<version>3.1</version>
 		</dependency>
 
 		<dependency>
@@ -133,7 +133,7 @@
 		<dependency>
 			<groupId>com.google.appengine.orm</groupId>
 			<artifactId>datanucleus-appengine</artifactId>
-			<version>2.1.1</version>
+			<version>2.1.2</version>
 
 			<!-- Need to exclude the enhancer since it interfere with the enhancer 
 				plugin. -->
@@ -150,13 +150,13 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.3.3</version>
+			<version>4.5.1</version>
 		</dependency>
 		<!-- google http components -->
 		<dependency>
 			<groupId>com.google.http-client</groupId>
 			<artifactId>google-http-client</artifactId>
-			<version>1.18.0-rc</version>
+			<version>1.20.0</version>
 		</dependency>
 		
 		<!-- manual installed jars -->
@@ -176,7 +176,7 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.2.4</version>
+			<version>2.4</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -220,8 +220,8 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <version>3.1</version>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
@@ -230,7 +230,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.4</version>
+                <version>2.5</version>
                 <configuration>
                     <archiveClasses>true</archiveClasses>
                     <webResources>

@@ -7,11 +7,13 @@ http://localhost:8080/
 https://mysmartlinewebdebug.appspot.com/
 
 http://localhost:8080/_ah/admin
-
+-------Git------------
 git add -A
 git commit -m "the commit message"
 git pull origin master
 git push origin master
-
+----------------------
+fuser -k -n tcp 8080
 lsof -i tcp:8080
-
+----------------------
+15:45 lacra termina

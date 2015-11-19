@@ -37,12 +37,12 @@
 									<td>
 										<p class="pull-right">
 											<a class="btn btn-success rounded"
-												href="/ServicePoint/notificationPanel/${servicePoint.id.id }"><i
+												href="/ServicePoint/notificationPanel/${servicePoint.id }"><i
 												class="fa fa-pencil"></i>
 												<spring:message code="linie.index.Notification-panel" /></a>
 											<a
 												class="btn btn-success rounded "
-												href="/ServicePoint/managePanel/${servicePoint.id.id }"><i
+												href="/ServicePoint/managePanel/${servicePoint.id }"><i
 												class="fa fa-cogs"></i>
 												<spring:message code="linie.index.Manage" /></a>
 										</p></td>

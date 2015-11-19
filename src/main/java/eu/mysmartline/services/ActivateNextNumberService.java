@@ -86,12 +86,12 @@ public class ActivateNextNumberService {
 	}
 
 	public static void activateNextNumber(ActivateNextNumberModel model) {
-
+		System.out.println("Debug: activateNextNuber debug1");
 		// locate the activated item
 		Map<LineNumber, NotificationItem> map = LineService
 				.getWaitingClients(model.getLineId());
 		for (Map.Entry<LineNumber, NotificationItem> entry : map.entrySet()) {
-			if (entry.getValue().getId() == model.getNotificationId()) {
+			if (entry.getValue().getId().equals(model.getNotificationId())) {
 				// archive current number
 				LineNumber currentNumber = LineService
 						.getCurrentLineNumber(model.getLineId());
@@ -104,11 +104,7 @@ public class ActivateNextNumberService {
 					currentNumber.setArchived(true);
 					currentNumber.setCurrent(false);
 					currentNumber.setDateArchived(new Date());
-					/**
-					 * TODO calculate time the previous client took to serve.
-					 * create special service for this and pas current date time
-					 * to the service.
-					 */
+					
 					// copute duration
 					if ((currentNumber.getDateActivated() != null)
 							&& (currentNumber.getDateArchived() != null)) {

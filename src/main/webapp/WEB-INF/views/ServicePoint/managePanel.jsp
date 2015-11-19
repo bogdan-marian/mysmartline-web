@@ -17,7 +17,7 @@
 					<div class="tag-box tag-box-v1 box-shadow shadow-effect-2">
 						<p>
 							<a class="btn-u btn-u-red rounded"
-								href="/ServicePoint/archive/${servicePoint.longPartId }"><i
+								href="/ServicePoint/archive/${servicePoint.id }"><i
 								class="fa fa-exclamation-triangle"></i> <spring:message
 									code="linie.manage.Archive" /></a>
 						</p>

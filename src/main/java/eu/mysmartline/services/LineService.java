@@ -99,7 +99,6 @@ public class LineService {
 		query.setMaxResults(1);
 		lineNumbers = query.getResultList();
 		em.getTransaction().rollback();
-		System.out.println("Debug item:-------------------------- getCurrentLineNumber");
 		if (lineNumbers.size() > 0) {
 			LineNumber lineNumber = lineNumbers.get(0);
 			return lineNumber;
@@ -351,16 +350,16 @@ public class LineService {
 			String lineId) {
 		// I should allso order by date;
 		Map<LineNumber, NotificationItem> map = new LinkedHashMap<LineNumber, NotificationItem>();
-		Key lineKey = getKey(lineId);
+		//Key lineKey = getKey(lineId);
 		EntityManager em = EmfService.getEntityManager();
 		em.getTransaction().begin();
-		Line line = em.find(Line.class, lineKey);
+		//Line line = em.find(Line.class, lineKey);*/
 
 		TypedQuery<LineNumber> query = em
 				.createQuery(
-						"select n from LineNumber n where n.line=:theLine and n.isCurrent=:vIsCurrent and n.isArchived=:vIsArchived order by n.dateAsigned asc",
+						"select n from LineNumber n where n.lineId=:theLineId and n.isCurrent=:vIsCurrent and n.isArchived=:vIsArchived order by n.dateAsigned asc",
 						LineNumber.class);
-		query.setParameter("theLine", line);
+		query.setParameter("theLineId", lineId);
 		query.setParameter("vIsCurrent", false);
 		query.setParameter("vIsArchived", false);
 		List<LineNumber> lineNumbers = query.getResultList();

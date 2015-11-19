@@ -214,7 +214,6 @@ public class MyHttpService {
 				e.printStackTrace();
 			}
 		}
-		throw new UnsupportedOperationException("Please finish this");
 	}
 	public static void nofityDeviceWasReset(String deviceGcmId){
 		GcmResetDevice gcmResetDevice = new GcmResetDevice();
